@@ -3,12 +3,19 @@ const cors = require("cors");
 const routes = require("./routes/stringRoutes");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-// Middlewares
+// Middleware
 app.use(cors());
 app.use(express.json());
-app.use("/", routes);
+
+// Mount routes correctly
+app.use("/strings", routes);
+
+// Base route
+app.get("/", (req, res) => {
+  res.send("String Analyzer Service is running 🚀");
+});
 
 // Start server
 app.listen(PORT, () => {
